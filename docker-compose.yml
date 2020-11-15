@@ -1,0 +1,23 @@
+version: '2'
+services:
+ app:
+  build:
+    context: .
+  volumes:
+  - ./:/var/www/html
+  - /var/www/html/storage
+  ports:
+  - "80:80"
+  environment:
+    - APP_KEY=base64:TICkr6/mC0SaKhY8c3fh273Sma4wTw69mGagco2iIAE=
+    - DB_HOST=mysql
+    - DB_USERNAME=root
+    - DB_PASSWORD=forge
+    - DB_DATABASE=forge
+ mysql:
+  image: mysql:8
+  environment:
+  - MYSQL_ROOT_PASSWORD=forge
+  - MYSQL_DATABASE=forge
+  ports:
+  - "3306:3306"

@@ -1,0 +1,25 @@
+parameters:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Level 2 warnings
+        - '#Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable::currentAccessToken\(\)\.#'
+        - '#Method App\\Http\\Middleware\\Authenticate::redirectTo\(\) should return string\|null but return statement is missing\.#'
+        - '#Call to an undefined method League\\Fractal\\Resource\\ResourceAbstract\:\:setPaginator\(\)\.#'
+        # Level 3 warnings
+        # Level 4 warnings
+        # Level 5 warnings
+        # Level 6 warnings
+        - '#Method App\\Http\\Resources\\[a-zA-Z0-9\\_]+\:\:\_\_construct\(\) has parameter \$data with no typehint specified\.#'
+        - '#Method App\\Http\\Resources\\Response\\[a-zA-Z0-9\\_]+\:\:transform\(\) has parameter \$data with no typehint specified\.#'
+        - '#Method App\\Http\\Resources\\Response\\[a-zA-Z0-9\\_]+\:\:transformCollection\(\) has parameter \$data with no typehint specified\.#'
+        - '#Method App\\Http\\Resources\\Response\\[a-zA-Z0-9\\_]+\:\:transformPaginatedCollection\(\) has parameter \$data with no typehint specified\.#'
+        - '#Method App\\Http\\Resources\\Transformers\\[a-zA-Z0-9\\_]+\:\:transform\(\) has no return typehint specified\.#'
+        # Level 7 warnings
+        - '#Cannot cast object\|string\|null to int\.#'
+        - '#Call to an undefined method App\\Models\\[a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Builder\:\:findOrFail\(\)\.#'
+        - '#Call to an undefined method App\\Models\\[a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Builder\:\:orderBy\(\)\.#'
+        - '#Call to an undefined method App\\Models\\[a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Builder\:\:create\(\)\.#'
+        - '#Call to an undefined method App\\Models\\[a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Builder\:\:where\(\)\.#'
+        - '#Call to an undefined method App\\Models\\[a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Builder\:\:updateOrCreate\(\)\.#'
+        - '#Parameter \#1 \$requestFile of method App\\Services\\FileManager\:\:store\(\) expects Illuminate\\Http\\UploadedFile\|null\, array\<Illuminate\\Http\\UploadedFile\>\|Illuminate\\Http\\UploadedFile\|null given\.#'
