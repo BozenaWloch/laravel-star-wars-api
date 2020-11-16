@@ -5,9 +5,11 @@ namespace App\Providers;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmsController;
+use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\UserController;
 use App\Policies\AuthPolicy;
 use App\Policies\FilmPolicy;
+use App\Policies\SpeciePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         AuthController::class => AuthPolicy::class,
         FilmsController::class => FilmPolicy::class,
+        SpeciesController::class => SpeciePolicy::class,
         UserController::class => UserPolicy::class,
     ];
 

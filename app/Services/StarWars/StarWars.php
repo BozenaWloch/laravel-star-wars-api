@@ -31,19 +31,36 @@ class StarWars
     }
 
     public function getPersonFilms(int $personId): array
-    {
-        $person = $this->getPersonById($personId);
+{
+    $person = $this->getPersonById($personId);
 
-        $films = [];
-        foreach ($person['films'] as $filmUrl) {
-            $films[] = $this->starWarsAPI->getFilmByUrl($filmUrl);
-        }
-
-        return $films;
+    $films = [];
+    foreach ($person['films_ids'] ?? [] as $filmId) {
+        $films[] = $this->starWarsAPI->getFilmById($filmId);
     }
+
+    return $films;
+}
 
     public function getFilm(int $filmId): array
     {
-       return $this->starWarsAPI->getFilmById($filmId);
+        return $this->starWarsAPI->getFilmById($filmId);
+    }
+
+    public function getPersonSpecies(int $personId): array
+    {
+        $person = $this->getPersonById($personId);
+
+        $species = [];
+        foreach ($person['species_ids'] as $specieId) {
+            $species[] = $this->starWarsAPI->getSpecieById($specieId);
+        }
+
+        return $species;
+    }
+
+    public function getSpecie(int $specieId): array
+    {
+        return $this->starWarsAPI->getSpecieById($specieId);
     }
 }

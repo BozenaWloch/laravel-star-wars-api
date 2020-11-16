@@ -134,11 +134,26 @@ class StarWarsAPI
         return $film;
     }
 
-    public function getFilmByUrl(string $filmUrl): array
+    public function getSpecieById(int $specieId): array
     {
-        $filmId = $this->getResourceIdFromUrl($filmUrl);
+        $specieCacheKey = sprintf('species.%s', $specieId);
 
-        return $this->getFilmById($filmId);
+        if ($this->cacheRepository->has($specieCacheKey)) {
+            return $this->cacheRepository->get($specieCacheKey);
+        }
+
+        $uri = sprintf('species/%s', $specieId);
+        try {
+            $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
+            $specie = json_decode((string)$response->getBody(), true);
+        } catch (ClientException $exception) {
+            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during film request.');
+        }
+
+        $this->cacheRepository->put($specieCacheKey, $specie, now()->addHours(24));
+
+        return $specie;
     }
 
     private function getResourceIdFromUrl(string $url): int

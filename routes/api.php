@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmsController;
+use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,11 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::prefix('{userId}/films')->group(function (): void {
             Route::get('', [FilmsController::class, 'list']);
             Route::get('/{filmId}', [FilmsController::class, 'read']);
+        });
+
+        Route::prefix('{userId}/species')->group(function (): void {
+            Route::get('', [SpeciesController::class, 'list']);
+            Route::get('/{specieId}', [SpeciesController::class, 'read']);
         });
     });
 });
