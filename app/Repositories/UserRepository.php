@@ -4,12 +4,18 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
     public function model(): User
     {
         return new User();
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->model()->all();
     }
 
     public function getByNickOrEmail(string $nickName): User

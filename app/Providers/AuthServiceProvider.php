@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\UserController;
 use App\Policies\AuthPolicy;
+use App\Policies\FilmPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -17,8 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        AuthController::class    => AuthPolicy::class,
-        UserController::class    => UserPolicy::class,
+        AuthController::class => AuthPolicy::class,
+        FilmsController::class => FilmPolicy::class,
+        UserController::class => UserPolicy::class,
     ];
 
     /**

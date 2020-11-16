@@ -22,6 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  *  @OA\Property(property="nick_name", type="string", maxLength=255, example="Doe"),
  *  @OA\Property(property="email", type="string", readOnly="true", format="email", description="User unique email address", example="user@gmail.com"),
  *  @OA\Property(property="role", type="integer", readOnly="true", description="User role: Admin = 1, Client = 2", example=2),
+ *  @OA\Property(property="external_id", type="integer", readOnly="true", description="User external_id"),
  *  @OA\Property(property="is_blocked", type="bool", description="Is blocked by admin", example=true),
  *  @OA\Property(property="created_at", type="string", description="Initial creation timestamp", readOnly="true", example="2018-04-16 11:11:11"),
  *  @OA\Property(property="updated_at", type="string", description="Last update timestamp", readOnly="true", example="2018-04-16 11:11:11"),
@@ -33,6 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $nick_name
  * @property string $email
  * @property int $role
+ * @property int $external_id
  * @property string $password
  * @property bool $is_blocked
  * @property \DateTime $created_at
@@ -87,6 +89,7 @@ class User extends Authenticatable
         'is_blocked',
         'email',
         'password',
+        'external_id',
     ];
 
     /**

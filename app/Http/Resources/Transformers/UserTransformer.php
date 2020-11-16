@@ -24,6 +24,7 @@ class UserTransformer extends AbstractTransformer
             'nick_name' => $user->nick_name,
             'email' => $user->email,
             'role' => $user->role,
+            'external_id' => $user->external_id,
             'is_blocked' => $user->is_blocked,
             'created_at' => $this->formatDate($user->created_at),
             'updated_at' => $this->formatDate($user->updated_at),

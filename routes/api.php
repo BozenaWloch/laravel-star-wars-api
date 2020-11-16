@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::patch('/{userId}', [UserController::class, 'update']);
         Route::get('/{userId}', [UserController::class, 'read']);
         Route::delete('/{userId}', [UserController::class, 'delete']);
-    });
 
+        Route::prefix('{userId}/films')->group(function (): void {
+            Route::get('', [FilmsController::class, 'list']);
+            Route::get('/{filmId}', [FilmsController::class, 'read']);
+        });
+    });
 });

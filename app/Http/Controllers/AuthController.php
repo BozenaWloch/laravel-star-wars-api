@@ -18,6 +18,8 @@ use App\Repositories\AcceptanceRepository;
 use App\Repositories\PasswordResetRepository;
 use App\Repositories\UserRepository;
 use App\Services\FileManager;
+use App\Services\StarWars\StarWars;
+use App\Services\StarWarsAPI;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,17 +47,27 @@ class AuthController extends Controller
      * @var \App\Repositories\PasswordResetRepository
      */
     private PasswordResetRepository $passwordResetRepository;
+    /**
+     * @var StarWarsAPI
+     */
+    private $starWarsAPI;
+    /**
+     * @var StarWars
+     */
+    private $starWars;
 
     public function __construct(
         UserResourceResponse $userResourceResponse,
         UserRepository $userRepository,
         PasswordResetRepository $passwordResetRepository,
-        UserHydrator $userHydrator
+        UserHydrator $userHydrator,
+        StarWars $starWars
     ) {
         $this->userResourceResponse = $userResourceResponse;
         $this->userHydrator = $userHydrator;
         $this->userRepository = $userRepository;
         $this->passwordResetRepository = $passwordResetRepository;
+        $this->starWars = $starWars;
     }
 
     /**
@@ -92,6 +104,7 @@ class AuthController extends Controller
     {
         $user = $this->userHydrator->hydrate($user, $request);
         $user->role = Role::ROLE_CLIENT_ID;
+        $user->external_id = $this->starWars->getRandomPerson()['id'];
         $this->userRepository->save($user);
 
         return $this->userResourceResponse->transform($request, $user);
