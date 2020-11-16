@@ -148,10 +148,33 @@ class StarWarsAPI
             $specie = json_decode((string)$response->getBody(), true);
         } catch (ClientException $exception) {
             $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
-            throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during film request.');
+            throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during specie request.');
         }
 
         $this->cacheRepository->put($specieCacheKey, $specie, now()->addHours(24));
+
+        return $specie;
+    }
+
+
+    public function getVehicleById(int $vehicleId): array
+    {
+        $vehicleCacheKey = sprintf('vehicles.%s', $vehicleId);
+
+        if ($this->cacheRepository->has($vehicleCacheKey)) {
+            return $this->cacheRepository->get($vehicleCacheKey);
+        }
+
+        $uri = sprintf('vehicles/%s', $vehicleId);
+        try {
+            $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
+            $specie = json_decode((string)$response->getBody(), true);
+        } catch (ClientException $exception) {
+            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during vehicle request.');
+        }
+
+        $this->cacheRepository->put($vehicleCacheKey, $specie, now()->addHours(24));
 
         return $specie;
     }

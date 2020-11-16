@@ -48,19 +48,36 @@ class StarWars
     }
 
     public function getPersonSpecies(int $personId): array
-    {
-        $person = $this->getPersonById($personId);
+{
+    $person = $this->getPersonById($personId);
 
-        $species = [];
-        foreach ($person['species_ids'] as $specieId) {
-            $species[] = $this->starWarsAPI->getSpecieById($specieId);
-        }
-
-        return $species;
+    $species = [];
+    foreach ($person['species_ids'] as $specieId) {
+        $species[] = $this->starWarsAPI->getSpecieById($specieId);
     }
+
+    return $species;
+}
 
     public function getSpecie(int $specieId): array
     {
         return $this->starWarsAPI->getSpecieById($specieId);
+    }
+
+    public function getPersonVehicles(int $personId): array
+    {
+        $person = $this->getPersonById($personId);
+
+        $vehicles = [];
+        foreach ($person['vehicles_ids'] as $vehicleId) {
+            $species[] = $this->starWarsAPI->getVehicleById($vehicleId);
+        }
+
+        return $vehicles;
+    }
+
+    public function getVehicle(int $vehicleId): array
+    {
+        return $this->starWarsAPI->getVehicleById($vehicleId);
     }
 }
