@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -43,7 +42,7 @@ class Controller extends BaseController
     protected function isAuthorizedAdmin(): bool
     {
         if (Auth::check()) {
-            /** @var User $user */
+            /** @var \App\Models\User $user */
             $user = Auth::user();
 
             return $user->isAdmin();

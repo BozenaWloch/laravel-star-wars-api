@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Exceptions\ForbiddenException;
@@ -9,13 +10,13 @@ use App\Services\StarWars\StarWars;
 
 class VehiclesController extends Controller
 {
-
     /**
-     * @var UserRepository
+     * @var \App\Repositories\UserRepository
      */
     private $userRepository;
+
     /**
-     * @var StarWars
+     * @var \App\Services\StarWars\StarWars
      */
     private $starWars;
 
@@ -45,8 +46,10 @@ class VehiclesController extends Controller
      *       description="Success"
      *     )
      * )
-     * @param Request $request
-     * @param int $userId
+     *
+     * @param \App\Http\Requests\Request $request
+     * @param int                        $userId
+     *
      * @return array
      */
     public function list(Request $request, int $userId): array
@@ -85,12 +88,14 @@ class VehiclesController extends Controller
      *       description="Success"
      *     )
      * )
-     * @param Request $request
-     * @param int $userId
-     * @param int $vehicleId
+     *
+     * @param \App\Http\Requests\Request $request
+     * @param int                        $userId
+     * @param int                        $vehicleId
+     *
+     * @throws \App\Exceptions\ForbiddenException
      *
      * @return array
-     * @throws ForbiddenException
      */
     public function read(Request $request, int $userId, int $vehicleId): array
     {
@@ -98,7 +103,7 @@ class VehiclesController extends Controller
 
         $person = $this->starWars->getPersonById($user->external_id);
 
-        if (!in_array($vehicleId, $person['vehicles_ids'] ?? [])) {
+        if (!\in_array($vehicleId, $person['vehicles_ids'] ?? [])) {
             throw new ForbiddenException();
         }
 

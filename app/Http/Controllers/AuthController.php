@@ -8,18 +8,14 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
-use App\Http\Requests\Hydrators\AcceptanceHydrator;
 use App\Http\Requests\Hydrators\UserHydrator;
 use App\Http\Resources\Response\UserResourceResponse;
 use App\Mail\PasswordResetEmail;
 use App\Models\Role;
 use App\Models\User;
-use App\Repositories\AcceptanceRepository;
 use App\Repositories\PasswordResetRepository;
 use App\Repositories\UserRepository;
-use App\Services\FileManager;
 use App\Services\StarWars\StarWars;
-use App\Services\StarWarsAPI;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -47,12 +43,14 @@ class AuthController extends Controller
      * @var \App\Repositories\PasswordResetRepository
      */
     private PasswordResetRepository $passwordResetRepository;
+
     /**
-     * @var StarWarsAPI
+     * @var \App\Services\StarWarsAPI
      */
     private $starWarsAPI;
+
     /**
-     * @var StarWars
+     * @var \App\Services\StarWars\StarWars
      */
     private $starWars;
 

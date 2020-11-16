@@ -13,7 +13,7 @@ class UserPolicy extends AbstractPolicy
     use HandlesAuthorization;
 
     /**
-     * @var UserRepository
+     * @var \App\Repositories\UserRepository
      */
     private UserRepository $userRepository;
 
@@ -25,14 +25,6 @@ class UserPolicy extends AbstractPolicy
     public function read(User $user, Request $request): bool
     {
         return $this->isAdmin($user) || $this->isOwner($user, $request);
-    }
-
-    protected function isOwner(User $user, Request $request): bool
-    {
-        /** @var \Illuminate\Routing\Route $route */
-        $route = $request->route();
-
-        return (int)$route->parameter('userId') === $user->id;
     }
 
     public function update(User $user, Request $request): bool
@@ -48,5 +40,13 @@ class UserPolicy extends AbstractPolicy
     public function createAdmin(User $user, Request $request): bool
     {
         return $this->isAdmin($user);
+    }
+
+    protected function isOwner(User $user, Request $request): bool
+    {
+        /** @var \Illuminate\Routing\Route $route */
+        $route = $request->route();
+
+        return (int) $route->parameter('userId') === $user->id;
     }
 }

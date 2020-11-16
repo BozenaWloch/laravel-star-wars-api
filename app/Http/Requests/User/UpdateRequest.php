@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\Request;
-use App\Models\Acceptance;
 use Illuminate\Validation\Rule as ValidationRule;
 
 class UpdateRequest extends Request

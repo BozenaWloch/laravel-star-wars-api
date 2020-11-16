@@ -16,19 +16,22 @@ class StarWarsAPI
         'starships',
         'planets',
     ];
+
     /**
-     * @var StarWarsAPIGuzzleClient
+     * @var \App\Services\StarWarsAPIGuzzleClient
      */
     private $starWarsAPIGuzzleClient;
+
     /**
-     * @var CacheRepository
+     * @var \Illuminate\Cache\Repository
      */
     private $cacheRepository;
 
     /**
      * StarWarsAPI constructor.
-     * @param StarWarsAPIGuzzleClient $starWarsAPIGuzzle
-     * @param CacheRepository $cacheRepository
+     *
+     * @param \App\Services\StarWarsAPIGuzzleClient $starWarsAPIGuzzle
+     * @param \Illuminate\Cache\Repository          $cacheRepository
      */
     public function __construct(StarWarsAPIGuzzleClient $starWarsAPIGuzzle, CacheRepository $cacheRepository)
     {
@@ -49,10 +52,10 @@ class StarWarsAPI
             do {
                 $response = $this->starWarsAPIGuzzleClient->request('GET', 'people', [
                     'query' => [
-                        'page' => $pageNumber
-                    ]
+                        'page' => $pageNumber,
+                    ],
                 ]);
-                $decodedResponse = json_decode((string)$response->getBody(), true);
+                $decodedResponse = \json_decode((string) $response->getBody(), true);
 
                 if (isset($decodedResponse['results'])) {
                     foreach ($decodedResponse['results'] as $result) {
@@ -66,10 +69,11 @@ class StarWarsAPI
                     }
                 }
 
-                $pageNumber++;
-            } while (isset($decodedResponse['next']) && $decodedResponse['next'] !== null);
+                ++$pageNumber;
+            } while (isset($decodedResponse['next']) && null !== $decodedResponse['next']);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during people request.');
         }
 
@@ -80,19 +84,20 @@ class StarWarsAPI
 
     public function getPersonById(int $personId): array
     {
-        $personCacheKey = sprintf('person.%s', $personId);
+        $personCacheKey = \sprintf('person.%s', $personId);
 
         if ($this->cacheRepository->has($personCacheKey)) {
             return $this->cacheRepository->get($personCacheKey);
         }
 
-        $uri = sprintf('people/%s', $personId);
+        $uri = \sprintf('people/%s', $personId);
+
         try {
             $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
-            $person = json_decode((string)$response->getBody(), true);
-
+            $person = \json_decode((string) $response->getBody(), true);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during person request.');
         }
 
@@ -103,7 +108,7 @@ class StarWarsAPI
                     $personDependencyIds[] = $this->getResourceIdFromUrl($personDependency);
                 }
 
-                $person[sprintf('%s_ids', $dependency)] = $personDependencyIds;
+                $person[\sprintf('%s_ids', $dependency)] = $personDependencyIds;
             }
         }
 
@@ -114,18 +119,20 @@ class StarWarsAPI
 
     public function getFilmById(int $filmId): array
     {
-        $filmCacheKey = sprintf('film.%s', $filmId);
+        $filmCacheKey = \sprintf('film.%s', $filmId);
 
         if ($this->cacheRepository->has($filmCacheKey)) {
             return $this->cacheRepository->get($filmCacheKey);
         }
 
-        $uri = sprintf('films/%s', $filmId);
+        $uri = \sprintf('films/%s', $filmId);
+
         try {
             $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
-            $film = json_decode((string)$response->getBody(), true);
+            $film = \json_decode((string) $response->getBody(), true);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during film request.');
         }
 
@@ -136,18 +143,20 @@ class StarWarsAPI
 
     public function getSpecieById(int $specieId): array
     {
-        $specieCacheKey = sprintf('species.%s', $specieId);
+        $specieCacheKey = \sprintf('species.%s', $specieId);
 
         if ($this->cacheRepository->has($specieCacheKey)) {
             return $this->cacheRepository->get($specieCacheKey);
         }
 
-        $uri = sprintf('species/%s', $specieId);
+        $uri = \sprintf('species/%s', $specieId);
+
         try {
             $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
-            $specie = json_decode((string)$response->getBody(), true);
+            $specie = \json_decode((string) $response->getBody(), true);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during specie request.');
         }
 
@@ -158,18 +167,20 @@ class StarWarsAPI
 
     public function getVehicleById(int $vehicleId): array
     {
-        $vehicleCacheKey = sprintf('vehicles.%s', $vehicleId);
+        $vehicleCacheKey = \sprintf('vehicles.%s', $vehicleId);
 
         if ($this->cacheRepository->has($vehicleCacheKey)) {
             return $this->cacheRepository->get($vehicleCacheKey);
         }
 
-        $uri = sprintf('vehicles/%s', $vehicleId);
+        $uri = \sprintf('vehicles/%s', $vehicleId);
+
         try {
             $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
-            $vehicle = json_decode((string)$response->getBody(), true);
+            $vehicle = \json_decode((string) $response->getBody(), true);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during vehicle request.');
         }
 
@@ -180,18 +191,20 @@ class StarWarsAPI
 
     public function getStarshipById(int $starshipId): array
     {
-        $starshipCacheKey = sprintf('starships.%s', $starshipId);
+        $starshipCacheKey = \sprintf('starships.%s', $starshipId);
 
         if ($this->cacheRepository->has($starshipCacheKey)) {
             return $this->cacheRepository->get($starshipCacheKey);
         }
 
-        $uri = sprintf('starships/%s', $starshipId);
+        $uri = \sprintf('starships/%s', $starshipId);
+
         try {
             $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
-            $starship = json_decode((string)$response->getBody(), true);
+            $starship = \json_decode((string) $response->getBody(), true);
         } catch (ClientException $exception) {
-            $error = json_decode((string)$exception->getResponse()->getBody()->getContents(), true);
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
             throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during starship request.');
         }
 
@@ -200,11 +213,34 @@ class StarWarsAPI
         return $starship;
     }
 
-    private function getResourceIdFromUrl(string $url): int
+    public function getPlanetById(int $planetId): array
     {
-        $urlPathParts = explode('/', trim(parse_url($url, PHP_URL_PATH), '/'));
+        $planetCacheKey = \sprintf('planets.%s', $planetId);
 
-        return (int)end($urlPathParts);
+        if ($this->cacheRepository->has($planetCacheKey)) {
+            return $this->cacheRepository->get($planetCacheKey);
+        }
+
+        $uri = \sprintf('planets/%s', $planetId);
+
+        try {
+            $response = $this->starWarsAPIGuzzleClient->request('GET', $uri);
+            $planet = \json_decode((string) $response->getBody(), true);
+        } catch (ClientException $exception) {
+            $error = \json_decode((string) $exception->getResponse()->getBody()->getContents(), true);
+
+            throw new StarWarsAPIException($error['detail'] ?? 'Something went wrong during planet request.');
+        }
+
+        $this->cacheRepository->put($planetCacheKey, $planet, now()->addHours(24));
+
+        return $planet;
     }
 
+    private function getResourceIdFromUrl(string $url): int
+    {
+        $urlPathParts = \explode('/', \trim(\parse_url($url, PHP_URL_PATH), '/'));
+
+        return (int) \end($urlPathParts);
+    }
 }

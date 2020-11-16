@@ -7,9 +7,8 @@ use App\Services\StarWarsAPI;
 
 class StarWars
 {
-
     /**
-     * @var StarWarsAPI
+     * @var \App\Services\StarWarsAPI
      */
     private $starWarsAPI;
 
@@ -22,7 +21,7 @@ class StarWars
     {
         $people = $this->starWarsAPI->getPeople();
 
-        return $people[array_rand($people)];
+        return $people[\array_rand($people)];
     }
 
     public function getPersonById(int $personId): array
@@ -52,7 +51,7 @@ class StarWars
         $person = $this->getPersonById($personId);
 
         $species = [];
-        foreach ($person['species_ids'] as $specieId) {
+        foreach ($person['species_ids'] ?? [] as $specieId) {
             $species[] = $this->starWarsAPI->getSpecieById($specieId);
         }
 
@@ -69,8 +68,8 @@ class StarWars
         $person = $this->getPersonById($personId);
 
         $vehicles = [];
-        foreach ($person['vehicles_ids'] as $vehicleId) {
-            $species[] = $this->starWarsAPI->getVehicleById($vehicleId);
+        foreach ($person['vehicles_ids'] ?? [] as $vehicleId) {
+            $vehicles[] = $this->starWarsAPI->getVehicleById($vehicleId);
         }
 
         return $vehicles;
@@ -81,14 +80,13 @@ class StarWars
         return $this->starWarsAPI->getVehicleById($vehicleId);
     }
 
-
     public function getPersonStarships(int $personId): array
     {
         $person = $this->getPersonById($personId);
 
         $starships = [];
-        foreach ($person['starships_ids'] as $starshipId) {
-            $species[] = $this->starWarsAPI->getStarshipById($starshipId);
+        foreach ($person['starships_ids'] ?? [] as $starshipId) {
+            $starships[] = $this->starWarsAPI->getStarshipById($starshipId);
         }
 
         return $starships;
@@ -97,5 +95,22 @@ class StarWars
     public function getStarship(int $starshipId): array
     {
         return $this->starWarsAPI->getStarshipById($starshipId);
+    }
+
+    public function getPersonPlanets(int $personId): array
+    {
+        $person = $this->getPersonById($personId);
+
+        $planets = [];
+        foreach ($person['planets_ids'] ?? [] as $planetId) {
+            $planets[] = $this->starWarsAPI->getPlanetById($planetId);
+        }
+
+        return $planets;
+    }
+
+    public function getPlanet(int $planetId): array
+    {
+        return $this->starWarsAPI->getPlanetById($planetId);
     }
 }

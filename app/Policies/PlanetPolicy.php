@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FilmPolicy extends AbstractPolicy
+class PlanetPolicy extends AbstractPolicy
 {
     use HandlesAuthorization;
 

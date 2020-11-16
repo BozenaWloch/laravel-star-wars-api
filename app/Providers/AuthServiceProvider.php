@@ -5,12 +5,14 @@ namespace App\Providers;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmsController;
+use App\Http\Controllers\PlanetsController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\StarshipsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VehiclesController;
 use App\Policies\AuthPolicy;
 use App\Policies\FilmPolicy;
+use App\Policies\PlanetPolicy;
 use App\Policies\SpeciePolicy;
 use App\Policies\StarshipPolicy;
 use App\Policies\UserPolicy;
@@ -25,12 +27,13 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        AuthController::class => AuthPolicy::class,
-        FilmsController::class => FilmPolicy::class,
-        SpeciesController::class => SpeciePolicy::class,
+        AuthController::class      => AuthPolicy::class,
+        FilmsController::class     => FilmPolicy::class,
+        PlanetsController::class   => PlanetPolicy::class,
+        SpeciesController::class   => SpeciePolicy::class,
         StarshipsController::class => StarshipPolicy::class,
-        UserController::class => UserPolicy::class,
-        VehiclesController::class => VehiclePolicy::class,
+        UsersController::class     => UserPolicy::class,
+        VehiclesController::class  => VehiclePolicy::class,
     ];
 
     /**

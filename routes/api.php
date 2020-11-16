@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmsController;
+use App\Http\Controllers\PlanetsController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\StarshipsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VehiclesController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,10 +33,10 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('logout', [AuthController::class, 'logout']);
 
     Route::prefix('users')->group(function (): void {
-        Route::post('/admin/create', [UserController::class, 'createAdmin']);
-        Route::patch('/{userId}', [UserController::class, 'update']);
-        Route::get('/{userId}', [UserController::class, 'read']);
-        Route::delete('/{userId}', [UserController::class, 'delete']);
+        Route::post('/admin/create', [UsersController::class, 'createAdmin']);
+        Route::patch('/{userId}', [UsersController::class, 'update']);
+        Route::get('/{userId}', [UsersController::class, 'read']);
+        Route::delete('/{userId}', [UsersController::class, 'delete']);
 
         Route::prefix('{userId}/films')->group(function (): void {
             Route::get('', [FilmsController::class, 'list']);
@@ -55,6 +56,11 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::prefix('{userId}/starships')->group(function (): void {
             Route::get('', [StarshipsController::class, 'list']);
             Route::get('/{starshipId}', [StarshipsController::class, 'read']);
+        });
+
+        Route::prefix('{userId}/planets')->group(function (): void {
+            Route::get('', [PlanetsController::class, 'list']);
+            Route::get('/{planetId}', [PlanetsController::class, 'read']);
         });
     });
 });

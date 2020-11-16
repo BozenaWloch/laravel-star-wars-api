@@ -12,12 +12,11 @@ class StarWarsAPIGuzzleClient
      */
     private $options;
 
-
     public function __construct()
     {
         $this->options = [
             'base_uri' => env('STAR_WARS_API_URL', 'https://swapi.dev/api/'),
-            'timeout' => 60,
+            'timeout'  => 60,
         ];
     }
 

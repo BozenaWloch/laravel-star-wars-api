@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -21,17 +22,22 @@ class ListRegisteredUsers extends Command
      * @var string
      */
     protected $description = 'Get users list';
+
     /**
-     * @var UserRepository
+     * @var \App\Repositories\UserRepository
      */
     private $userRepository;
+
     /**
-     * @var StarWars
+     * @var \App\Services\StarWars\StarWars
      */
     private $starWars;
 
     /**
      * Create a new command instance.
+     *
+     * @param \App\Repositories\UserRepository $userRepository
+     * @param \App\Services\StarWars\StarWars  $starWars
      *
      * @return void
      */
@@ -41,7 +47,6 @@ class ListRegisteredUsers extends Command
         $this->starWars = $starWars;
 
         parent::__construct();
-
     }
 
     /**
@@ -58,13 +63,13 @@ class ListRegisteredUsers extends Command
             $person = $this->starWars->getPersonById($user->external_id);
 
             $usersData[] = [
-                'email' => $user->email,
-                'nick' => $user->nick_name,
+                'email'     => $user->email,
+                'nick'      => $user->nick_name,
                 'hero_name' => $person['name'],
             ];
         }
 
-        print_r($usersData);
+        \print_r($usersData);
 
         return 0;
     }

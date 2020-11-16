@@ -14,7 +14,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /**
      * @var \App\Http\Resources\Response\UserResourceResponse
@@ -197,8 +197,8 @@ class UserController extends Controller
      *     )
      * )
      *
-     * @param DeleteRequest $request
-     * @param int $userId
+     * @param \App\Http\Requests\User\DeleteRequest $request
+     * @param int                                   $userId
      *
      * @return \Illuminate\Http\JsonResponse
      */

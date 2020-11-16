@@ -8,7 +8,7 @@ use App\Http\Requests\Request;
 use App\Repositories\UserRepository;
 use App\Services\StarWars\StarWars;
 
-class StarshipsController extends Controller
+class PlanetsController extends Controller
 {
     /**
      * @var \App\Repositories\UserRepository
@@ -28,9 +28,9 @@ class StarshipsController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/users/{userId}/starships",
-     *     summary="Display selected user starships",
-     *     tags={"starships"},
+     *     path="/users/{userId}/planets",
+     *     summary="Display selected user planets",
+     *     tags={"planets"},
      *     @OA\Parameter(
      *        in="path",
      *        name="userId",
@@ -56,14 +56,14 @@ class StarshipsController extends Controller
     {
         $user = $this->userRepository->getById($userId);
 
-        return $this->starWars->getPersonStarships($user->external_id);
+        return $this->starWars->getPersonPlanets($user->external_id);
     }
 
     /**
      * @OA\Get(
-     *     path="/users/{userId}/starships/{starshipsId}",
-     *     summary="Display selected user starships",
-     *     tags={"starships"},
+     *     path="/users/{userId}/planets/{planetId}",
+     *     summary="Display selected user planets",
+     *     tags={"planets"},
      *     @OA\Parameter(
      *        in="path",
      *        name="userId",
@@ -75,7 +75,7 @@ class StarshipsController extends Controller
      *     ),
      *     @OA\Parameter(
      *        in="path",
-     *        name="starshipsId",
+     *        name="planetId",
      *        required=true,
      *        example="1",
      *        @OA\Schema(
@@ -91,22 +91,22 @@ class StarshipsController extends Controller
      *
      * @param \App\Http\Requests\Request $request
      * @param int                        $userId
-     * @param int                        $starshipId
+     * @param int                        $planetId
      *
      * @throws \App\Exceptions\ForbiddenException
      *
      * @return array
      */
-    public function read(Request $request, int $userId, int $starshipId): array
+    public function read(Request $request, int $userId, int $planetId): array
     {
         $user = $this->userRepository->getById($userId);
 
         $person = $this->starWars->getPersonById($user->external_id);
 
-        if (!\in_array($starshipId, $person['starships_ids'] ?? [])) {
+        if (!\in_array($planetId, $person['planets_ids'] ?? [])) {
             throw new ForbiddenException();
         }
 
-        return $film = $this->starWars->getStarship($starshipId);
+        return $film = $this->starWars->getPlanet($planetId);
     }
 }

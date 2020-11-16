@@ -13,7 +13,7 @@ class StarshipPolicy extends AbstractPolicy
     use HandlesAuthorization;
 
     /**
-     * @var UserRepository
+     * @var \App\Repositories\UserRepository
      */
     private UserRepository $userRepository;
 
@@ -37,6 +37,6 @@ class StarshipPolicy extends AbstractPolicy
         /** @var \Illuminate\Routing\Route $route */
         $route = $request->route();
 
-        return (int)$route->parameter('userId') === $user->id;
+        return (int) $route->parameter('userId') === $user->id;
     }
 }
