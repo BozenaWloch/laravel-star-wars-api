@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\SpeciesController;
+use App\Http\Controllers\StarshipsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehiclesController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,11 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::prefix('{userId}/vehicles')->group(function (): void {
             Route::get('', [VehiclesController::class, 'list']);
             Route::get('/{vehicleId}', [VehiclesController::class, 'read']);
+        });
+
+        Route::prefix('{userId}/starships')->group(function (): void {
+            Route::get('', [StarshipsController::class, 'list']);
+            Route::get('/{starshipId}', [StarshipsController::class, 'read']);
         });
     });
 });

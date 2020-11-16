@@ -31,16 +31,16 @@ class StarWars
     }
 
     public function getPersonFilms(int $personId): array
-{
-    $person = $this->getPersonById($personId);
+    {
+        $person = $this->getPersonById($personId);
 
-    $films = [];
-    foreach ($person['films_ids'] ?? [] as $filmId) {
-        $films[] = $this->starWarsAPI->getFilmById($filmId);
+        $films = [];
+        foreach ($person['films_ids'] ?? [] as $filmId) {
+            $films[] = $this->starWarsAPI->getFilmById($filmId);
+        }
+
+        return $films;
     }
-
-    return $films;
-}
 
     public function getFilm(int $filmId): array
     {
@@ -48,16 +48,16 @@ class StarWars
     }
 
     public function getPersonSpecies(int $personId): array
-{
-    $person = $this->getPersonById($personId);
+    {
+        $person = $this->getPersonById($personId);
 
-    $species = [];
-    foreach ($person['species_ids'] as $specieId) {
-        $species[] = $this->starWarsAPI->getSpecieById($specieId);
+        $species = [];
+        foreach ($person['species_ids'] as $specieId) {
+            $species[] = $this->starWarsAPI->getSpecieById($specieId);
+        }
+
+        return $species;
     }
-
-    return $species;
-}
 
     public function getSpecie(int $specieId): array
     {
@@ -79,5 +79,23 @@ class StarWars
     public function getVehicle(int $vehicleId): array
     {
         return $this->starWarsAPI->getVehicleById($vehicleId);
+    }
+
+
+    public function getPersonStarships(int $personId): array
+    {
+        $person = $this->getPersonById($personId);
+
+        $starships = [];
+        foreach ($person['starships_ids'] as $starshipId) {
+            $species[] = $this->starWarsAPI->getStarshipById($starshipId);
+        }
+
+        return $starships;
+    }
+
+    public function getStarship(int $starshipId): array
+    {
+        return $this->starWarsAPI->getStarshipById($starshipId);
     }
 }
